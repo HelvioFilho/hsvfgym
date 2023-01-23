@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "hsvfGym",
+    "slug": "hsvfGym",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/main/icon.png",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "splash": {
+      "image": "./src/assets/main/splash.png",
+      "backgroundColor": "#121214",
+      "resizeMode": "contain"
+    },
+    "androidStatusBar": {
+      "barStyle": "light-content"
+    },
+    "android": {
+      "package": "com.hsvfgym"
+    },
+    "ios": {
+      "bundleIdentifier": "com.hsvfgym"
+    },
+    "description": "App to manage your exercises",
+    "githubUrl": "https://github.com/HelvioFilho/hsvfgym"
+  }
+}
