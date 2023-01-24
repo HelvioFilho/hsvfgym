@@ -23,6 +23,17 @@
       "bundleIdentifier": "com.hsvfgym"
     },
     "description": "App to manage your exercises",
-    "githubUrl": "https://github.com/HelvioFilho/hsvfgym"
+    "githubUrl": "https://github.com/HelvioFilho/hsvfgym",
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "O aplicativo vai acessar as suas fotos para permitir que você as compartilhe com os seus amigos."
+        }
+      ]
+    ],
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    }
   }
 }
