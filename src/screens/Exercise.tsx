@@ -1,4 +1,6 @@
 import { Box, Heading, HStack, Icon, Image, Text, VStack } from 'native-base';
+import { useNavigation } from '@react-navigation/native';
+import { AppNavigatorRoutesProps } from '@routes/app.routes';
 import { Feather } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 
@@ -9,6 +11,8 @@ import SeriesSvg from '@assets/series.svg';
 import RepetitionsSvg from '@assets/repetitions.svg';
 
 export function Exercise() {
+  const { goBack } = useNavigation<AppNavigatorRoutesProps>();
+
   return (
     <VStack flex={1}>
       <VStack
@@ -16,7 +20,7 @@ export function Exercise() {
         pt={12}
         bg='gray.600'
       >
-        <TouchableOpacity onPress={() => { }}>
+        <TouchableOpacity onPress={goBack}>
           <Icon
             as={Feather}
             name='arrow-left'
@@ -42,7 +46,7 @@ export function Exercise() {
             <BodySvg />
             <Text
               ml={1}
-              color='grau.200'
+              color='gray.200'
               textTransform='capitalize'
             >
               Costas
@@ -60,23 +64,23 @@ export function Exercise() {
           alt="Nome do exercício"
           source={{ uri: 'http://conteudo.imguol.com.br/c/entretenimento/0c/2019/12/03/remada-unilateral-com-halteres-1575402100538_v2_600x600.jpg' }}
         />
-        <Box 
-        pb={4} 
-        px={4}
-        bg="gray.600" 
-        rounded="md" 
+        <Box
+          pb={4}
+          px={4}
+          bg="gray.600"
+          rounded="md"
         >
-          <HStack 
-          mb={6} 
-          mt={5}
-          alignItems="center" 
-          justifyContent="space-around" 
+          <HStack
+            mb={6}
+            mt={5}
+            alignItems="center"
+            justifyContent="space-around"
           >
             <HStack>
               <SeriesSvg />
-              <Text 
-              ml={2}
-              color="gray.200" 
+              <Text
+                ml={2}
+                color="gray.200"
               >
                 3 séries
               </Text>
@@ -84,9 +88,9 @@ export function Exercise() {
 
             <HStack>
               <RepetitionsSvg />
-              <Text 
-              ml="2"
-              color="gray.200" 
+              <Text
+                ml={2}
+                color="gray.200"
               >
                 12 repetições
               </Text>
