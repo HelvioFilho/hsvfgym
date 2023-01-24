@@ -8,8 +8,8 @@ export function ScreenHeader({ title }: ScreenHeaderProps) {
   return (
     <Center
       bg='gray.600'
-      fontFamily='heading'
-      fontSize='xl'
+      pb={6}
+      pt={16}
     >
       <Heading
         fontFamily='heading'
