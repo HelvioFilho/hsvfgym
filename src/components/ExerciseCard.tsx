@@ -21,7 +21,7 @@ export function ExerciseCard({ ...rest }: ExerciseCardProps) {
           h={16}
           mr={4}
           rounded="md"
-          resizeMode="center"
+          resizeMode="cover"
           alt="Imagem do exercício"
           source={{ uri: 'http://conteudo.imguol.com.br/c/entretenimento/0c/2019/12/03/remada-unilateral-com-halteres-1575402100538_v2_600x600.jpg' }}
         />
