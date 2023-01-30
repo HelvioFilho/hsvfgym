@@ -53,6 +53,7 @@ export function SignUp() {
       await api.post('users', { name, email, password })
       await signIn(email, password);
     } catch (error) {
+      setIsLoading(false);
       const isAppError = error instanceof AppError;
       const title = isAppError ? error.message : 'Não foi possível criar a conta. Tente novamente mais tarde';
       toast.show({
@@ -61,9 +62,6 @@ export function SignUp() {
         bgColor: 'red.500'
       });
       
-    }finally{
-      setIsLoading(false);
-
     }
   }
 
