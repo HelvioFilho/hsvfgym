@@ -1,14 +1,26 @@
-import { Center, Heading, Image, ScrollView, Text, VStack } from 'native-base';
-import { useNavigation } from '@react-navigation/native';
-import { useForm, Controller } from 'react-hook-form';
+import { useState } from 'react';
+import {
+  Center,
+  Heading,
+  Image,
+  ScrollView,
+  Text,
+  useToast,
+  VStack
+} from 'native-base';
 import * as yup from 'yup';
+
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigation } from '@react-navigation/native';
+import { Controller, useForm } from 'react-hook-form';
 
-import LogoSvg from '@assets/logo.svg';
 import BackgroundImg from '@assets/background.png';
+import LogoSvg from '@assets/logo.svg';
 
-import { Input } from '@components/Input';
 import { Button } from '@components/Button';
+import { Input } from '@components/Input';
+import { api } from '@services/api';
+import { AppError } from '@utils/AppError';
 
 type FormDataProps = {
   name: string;
@@ -25,14 +37,41 @@ const signUpSchema = yup.object({
 });
 
 export function SignUp() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
     resolver: yupResolver(signUpSchema),
   });
-
   const { goBack } = useNavigation();
+  const toast = useToast();
 
-  function handleSignUp({ name, email, password, password_confirm }: FormDataProps) {
-    console.log({ name, email, password, password_confirm });
+  function handleSignUp({ name, email, password }: FormDataProps) {
+    setIsLoading(true);
+    api.post('users', { name, email, password })
+      .then(() => {
+        control._reset({
+          name: '',
+          email: '',
+          password: '',
+          password_confirm: '',
+        });
+        toast.show({
+          title: 'Agora você já pode entrar na aplicação!',
+          placement: 'top',
+          bgColor: 'green.500'
+        });
+        goBack();
+      }).catch(error => {
+        const isAppError = error instanceof AppError;
+        const title = isAppError ? error.message : 'Não foi possível criar a conta. Tente novamente mais tarde';
+        toast.show({
+          title,
+          placement: 'top',
+          bgColor: 'red.500'
+        });
+      }).finally(() => {
+        setIsLoading(false);
+      });
   }
 
   return (
@@ -125,26 +164,18 @@ export function SignUp() {
               />
             )}
           />
-          <Button 
-          title='Criar e cessar' 
-          onPress={handleSubmit(handleSignUp)}
-          />
-        </Center>
-        <Center mt={24}>
-          <Text
-            color='gray.100'
-            fontFamily='body'
-            fontSize='sm'
-            mb={3}
-          >
-            Voltar para o login
-          </Text>
           <Button
-            title='Criar Conta'
-            variant='outline'
-            onPress={() => goBack()}
+            title='Criar e cessar'
+            onPress={handleSubmit(handleSignUp)}
+            isLoading={isLoading}
           />
         </Center>
+        <Button
+          title='Voltar para o Login'
+          variant='outline'
+          onPress={() => goBack()}
+          mt={12}
+        />
       </VStack>
     </ScrollView>
   );
