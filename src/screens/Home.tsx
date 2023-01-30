@@ -71,7 +71,7 @@ export function Home() {
   }, []);
 
   useFocusEffect(useCallback(() => {
-    fetchExercisesByGroup();
+    if(groupSelected !== '') fetchExercisesByGroup();
   }, [groupSelected]));
 
   return (
@@ -122,7 +122,7 @@ export function Home() {
               data={exercises}
               keyExtractor={item => item.id}
               renderItem={({ item }) => (
-                <ExerciseCard onPress={() => navigate('exercise', { exerciseId: item.id })} />
+                <ExerciseCard data={item} onPress={() => navigate('exercise', { exerciseId: item.id })} />
               )}
               showsVerticalScrollIndicator={false}
               _contentContainerStyle={{
