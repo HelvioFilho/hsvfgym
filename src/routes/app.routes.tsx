@@ -12,7 +12,9 @@ import { Exercise } from '@screens/Exercise';
 
 type AppRoutesProps = {
   home: undefined;
-  exercise: undefined;
+  exercise: {
+    exerciseId: string;
+  }
   profile: undefined;
   history: undefined;
 }
