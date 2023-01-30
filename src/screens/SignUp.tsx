@@ -21,6 +21,7 @@ import { Button } from '@components/Button';
 import { Input } from '@components/Input';
 import { api } from '@services/api';
 import { AppError } from '@utils/AppError';
+import { useAuth } from '@hooks/useAuth';
 
 type FormDataProps = {
   name: string;
@@ -42,36 +43,28 @@ export function SignUp() {
   const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
     resolver: yupResolver(signUpSchema),
   });
+  const { signIn } = useAuth();
   const { goBack } = useNavigation();
   const toast = useToast();
 
-  function handleSignUp({ name, email, password }: FormDataProps) {
+  async function handleSignUp({ name, email, password }: FormDataProps) {
     setIsLoading(true);
-    api.post('users', { name, email, password })
-      .then(() => {
-        control._reset({
-          name: '',
-          email: '',
-          password: '',
-          password_confirm: '',
-        });
-        toast.show({
-          title: 'Agora você já pode entrar na aplicação!',
-          placement: 'top',
-          bgColor: 'green.500'
-        });
-        goBack();
-      }).catch(error => {
-        const isAppError = error instanceof AppError;
-        const title = isAppError ? error.message : 'Não foi possível criar a conta. Tente novamente mais tarde';
-        toast.show({
-          title,
-          placement: 'top',
-          bgColor: 'red.500'
-        });
-      }).finally(() => {
-        setIsLoading(false);
+    try {
+      await api.post('users', { name, email, password })
+      await signIn(email, password);
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const title = isAppError ? error.message : 'Não foi possível criar a conta. Tente novamente mais tarde';
+      toast.show({
+        title,
+        placement: 'top',
+        bgColor: 'red.500'
       });
+      
+    }finally{
+      setIsLoading(false);
+
+    }
   }
 
   return (
