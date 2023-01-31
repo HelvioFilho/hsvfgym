@@ -1,9 +1,15 @@
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
-import { Heading, HStack, Icon, Image, Text, VStack } from 'native-base';
+import {
+  Heading,
+  HStack,
+  Icon,
+  Image,
+  Text,
+  VStack
+} from 'native-base';
 
 import { Entypo } from '@expo/vector-icons';
 import { ExerciseDTO } from '@dtos/ExerciseDTO';
-import { api } from '@services/api';
 
 const { IMAGE_URL } = process.env;
 
