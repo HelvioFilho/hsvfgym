@@ -150,15 +150,20 @@ export function Exercise() {
           </Center> 
           :
             <VStack p={8}>
+              <Box
+                mb={3}
+                rounded='lg'
+                overflow='hidden'
+              >
               <Image
                 w="full"
                 h={80}
-                mb={3}
                 rounded="lg"
                 resizeMode="cover"
                 alt={exercise.name}
                 source={{ uri: `${IMAGE_URL}image/exercises/gif/${exercise.demo}` }}
               />
+              </Box>
               <Box
                 pb={4}
                 px={4}
