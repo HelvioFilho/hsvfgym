@@ -23,7 +23,7 @@ export function History() {
   const [exercises, setExercises] = useState<HistoryByDayDTO[]>([]);
 
   const toast = useToast();
-  const { refreshedToken, user } = useAuth();
+  const { user } = useAuth();
 
   async function fetchHistory() {
     try {
@@ -48,7 +48,7 @@ export function History() {
 
   useFocusEffect(useCallback(() => {
     fetchHistory();
-  }, [refreshedToken]));
+  }, []));
 
   return (
     <VStack flex={1}>
