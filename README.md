@@ -19,11 +19,11 @@
 
 ## Features
 
-- [ ] Create user account
-- [ ] Change user data
-- [ ] Login and logout
-- [ ] Show list of exercises
-- [ ] Shows history of exercises already performed
+- [x] Create user account
+- [x] Change user data
+- [x] Login and logout
+- [x] Show list of exercises
+- [x] Shows history of exercises already performed
 
 ## Technologies
 
