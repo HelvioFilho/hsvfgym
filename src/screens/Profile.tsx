@@ -68,7 +68,7 @@ export function Profile() {
 
   const toast = useToast();
   const { user, updateUserProfile } = useAuth();
-  const { control, reset, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
+  const { control, reset, setError, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
     defaultValues: {
       name: user.name,
       email: user.email
@@ -140,6 +140,23 @@ export function Profile() {
   async function handleProfileUpdate(data: FormDataProps) {
     try {
       setIsUpdating(true);
+      if(data.old_password === undefined && data.name === user.name) {
+        return toast.show({
+          title: 'Nada foi alterado para ser atualizado!',
+          placement: 'top',
+          bgColor: 'red.500'
+        });
+      }
+
+      if(data.old_password !== undefined) {
+        if(data.password === undefined) {
+          return  setError('password', { message: 'Informe a nova senha!' })
+        }
+        if(data.confirm_password === undefined) {
+          return setError('old_password', { message: 'Confirme a nova senha!' })
+        }
+      }
+
       const userUpdated = user;
       userUpdated.name = data.name;
       const userData = {
@@ -150,9 +167,10 @@ export function Profile() {
       await updateUserProfile(userUpdated);
 
       reset({
-        old_password: '',
-        password: '',
-        confirm_password: ''
+        name: data.name,
+        old_password: undefined,
+        password: undefined,
+        confirm_password: undefined
       });
 
       toast.show({
@@ -166,6 +184,7 @@ export function Profile() {
 
       if (error.response.data.message) {
         title = error.response.data.message;
+        setError('old_password', { message: error.response.data.message })
       } else {
         const isAppError = error instanceof AppError;
         title = isAppError ? error.message : 'Não foi possível atualizar o perfil. Tente novamente mais tarde.';
@@ -271,6 +290,7 @@ export function Profile() {
                 secureTextEntry
                 onChangeText={onChange}
                 value={value}
+                errorMessage={errors.old_password?.message}
               />
             )}
           />
